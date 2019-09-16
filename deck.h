@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <time.h>
+
 #define SIZE 25
 
 typedef struct {
@@ -37,3 +39,10 @@ Point getFront (Deck *q);
 
 /*Retorna sem remover o item na cauda da lista.*/
 Point getRear (Deck *q);
+
+
+
+
+Deck *setApple (Deck *apple, Point p, char field[][SIZE]);
+
+Point getApple(Deck *apple);

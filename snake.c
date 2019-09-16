@@ -57,7 +57,7 @@ void print_field (char field[SIZE][SIZE]) {
 
 int finish (Deck *d) {
    /*Terminar!*/
-   Point p = getFront (d);
+   Point p = getRear (d);
    if (p.x < 1 || p.x > SIZE-2 || p.y < 1 || p.y > SIZE-1)
       return 1;
    else
@@ -71,35 +71,41 @@ int main () {
    int center = SIZE/2;
    int snake_size = 5;
    Deck *d = createDeck ();
+   Deck *apple = createDeck();
 
    /*Inserindo a Snake no centro do campo: */
    int i;
    for (i = center-snake_size/2; i <= center+snake_size/2; i++) {
       d = insertFront (d, (Point){center, i}, field);
    }
-   //printf ("#### terminou :(  \n", !finish(d));
-
+   /*Setando a maçã */
+   apple = setApple(d, (Point){rand()%SIZE,rand()%SIZE}, field);
+   /*AQUI FUNCIONOU*/
    char pressionou_prv = ' ';
-   char pressionou_act = 'l';
+   char pressionou_act = 'a';
    int reverse = 0; /*variável para inverter cabeça com cauda (e vice-versa)*/
    while (!finish(d)) {
      while((!kbhit()) && (!finish(d))) {
        if (reverse) {
            Point p = getFront (d);
-           if (pressionou_act ==  'u') { d = insertFront (d, (Point){p.x-1, p.y}, field); }
-           else if (pressionou_act ==  'd') { d = insertFront (d, (Point){p.x+1, p.y}, field); }
-           else if (pressionou_act ==  'l') { d = insertFront (d, (Point){p.x, p.y-1}, field); }
+           if (pressionou_act ==  'w') { d = insertFront (d, (Point){p.x-1, p.y}, field); }
+           else if (pressionou_act ==  's') { d = insertFront (d, (Point){p.x+1, p.y}, field); }
+           else if (pressionou_act ==  'a') { d = insertFront (d, (Point){p.x, p.y-1}, field); }
            else { d = insertFront (d, (Point){p.x, p.y+1}, field); }
            d = deleteRear (d, field);
         }
         else {
            Point p = getRear (d);
-           if (pressionou_act ==  'u') { d = insertRear (d, (Point){p.x-1, p.y}, field); }
-           else if (pressionou_act ==  'd') { d = insertRear (d, (Point){p.x+1, p.y}, field); }
-           else if (pressionou_act ==  'l') { d = insertRear (d, (Point){p.x, p.y-1}, field); }
+           if (pressionou_act ==  'w') { d = insertRear (d, (Point){p.x-1, p.y}, field); }
+           else if (pressionou_act ==  's') { d = insertRear (d, (Point){p.x+1, p.y}, field); }
+           else if (pressionou_act ==  'a') { d = insertRear (d, (Point){p.x, p.y-1}, field); }
            else { d = insertRear (d, (Point){p.x, p.y+1}, field); }
            d = deleteFront (d, field);
         }
+        Point aux = getRear(d);
+        Point p_apple = getApple(apple);
+        if(p_apple.x == aux.x && p_apple.y == aux.y)
+          apple = setApple(d, (Point){rand()%SIZE,rand()%SIZE}, field);
         print_field (field);
         usleep(250000);
         system("clear");
@@ -108,13 +114,11 @@ int main () {
         /*Cada vez que uma tecla é pressionada o controle executa esse trecho: */
         pressionou_prv = pressionou_act;
         pressionou_act = getchar();
-        if ((pressionou_act ==  'd') && (pressionou_prv ==  'u')) { reverse = !reverse; }
-        else if ((pressionou_act ==  'u') && (pressionou_prv ==  'd')) { reverse = !reverse; }
-        else if ((pressionou_act ==  'l') && (pressionou_prv ==  'r')) { reverse = !reverse; }
-        else if ((pressionou_act ==  'r') && (pressionou_prv ==  'l')) { reverse = !reverse; }
+        if ((pressionou_act ==  's') && (pressionou_prv ==  'w')) { reverse = !reverse; }
+        else if ((pressionou_act ==  'w') && (pressionou_prv ==  's')) { reverse = !reverse; }
+        else if ((pressionou_act ==  'a') && (pressionou_prv ==  'd')) { reverse = !reverse; }
+        else if ((pressionou_act ==  'd') && (pressionou_prv ==  'a')) { reverse = !reverse; }
      }
    }
-   //printf ("#### terminou2 :(  \n", !finish(d));
-   //printf ("#### Perdeu :(  \n");
    return 0;
 }
