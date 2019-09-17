@@ -46,4 +46,4 @@ Deck *setApple (Deck *apple, Point p, char field[][SIZE]);
 
 Point getApple(Deck *apple);
 
-Deck *destruct (Deck *d, char field[][SIZE]);
+int destruct (Deck *d, Point deck, char field[][SIZE]);

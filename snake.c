@@ -69,7 +69,7 @@ int main () {
    char field[SIZE][SIZE];
    initialize_field (field);
    int center = SIZE/2;
-   int snake_size = 3;
+   int snake_size = 8;
    Deck *d = createDeck ();
    Deck *apple = createDeck();
    srand(time(NULL));
@@ -102,6 +102,9 @@ int main () {
            else { d = insertRear (d, (Point){p.x, p.y+1}, field); }
            d = deleteFront (d, field);
         }
+        //if(!finish)
+        if(destruct(d, getFront(d), field))
+          exit(1);
         Point head = getFront(d);
         Point p_apple = getApple(apple);
         Point cauda = getRear(d);
@@ -109,8 +112,6 @@ int main () {
           apple = setApple(d, (Point){rand()%SIZE,rand()%SIZE}, field);
           d = insertRear(d, (Point){cauda.x, cauda.y}, field);
         }
-        // IMPLEMENTAÇÃO DA DESTRUIÇÃO //
-        //d = destruct(d, field);
         print_field (field);
         //usleep(250000);
         usleep(100000);
