@@ -3,7 +3,6 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
-
 #include <time.h>
 
 #define SIZE 25
@@ -46,3 +45,5 @@ Point getRear (Deck *q);
 Deck *setApple (Deck *apple, Point p, char field[][SIZE]);
 
 Point getApple(Deck *apple);
+
+Deck *destruct (Deck *d, char field[][SIZE]);

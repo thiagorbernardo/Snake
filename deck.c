@@ -84,9 +84,8 @@ Deck* deleteRear (Deck *d, char field[][SIZE]) {
 }
 
 Deck *setApple (Deck *apple, Point p, char field[][SIZE]){
-  //srand(time(NULL));
   Deck *novo = (Deck *)malloc(sizeof(Deck));
-  field[p.x][p.y] = '#';
+  field[p.x][p.y] = '0';
   novo->p = p;
   novo->prev = NULL;
   novo->next = NULL;
@@ -99,4 +98,15 @@ Point getApple(Deck *apple){
 
   return apple->p;
 
+}
+Deck *destruct (Deck *d, char field[][SIZE]){
+  Deck *destr = d;
+  while(destr->next != NULL){
+    if(d->p.x == destr->p.x && d->p.y == destr->p.y){
+      exit(1);
+      field[d->p.x][d->p.y] = 'X';
+    }
+    destr = destr->next;
+  }
+  return d;
 }

@@ -69,10 +69,10 @@ int main () {
    char field[SIZE][SIZE];
    initialize_field (field);
    int center = SIZE/2;
-   int snake_size = 5;
+   int snake_size = 3;
    Deck *d = createDeck ();
    Deck *apple = createDeck();
-
+   srand(time(NULL));
    /*Inserindo a Snake no centro do campo: */
    int i;
    for (i = center-snake_size/2; i <= center+snake_size/2; i++) {
@@ -102,15 +102,22 @@ int main () {
            else { d = insertRear (d, (Point){p.x, p.y+1}, field); }
            d = deleteFront (d, field);
         }
-        Point aux = getRear(d);
+        Point head = getFront(d);
         Point p_apple = getApple(apple);
-        if(p_apple.x == aux.x && p_apple.y == aux.y)
+        Point cauda = getRear(d);
+        if(p_apple.x == head.x && p_apple.y == head.y){
           apple = setApple(d, (Point){rand()%SIZE,rand()%SIZE}, field);
+          d = insertRear(d, (Point){cauda.x, cauda.y}, field);
+        }
+        // IMPLEMENTAÇÃO DA DESTRUIÇÃO //
+        //d = destruct(d, field);
         print_field (field);
-        usleep(250000);
+        //usleep(250000);
+        usleep(100000);
         system("clear");
      }
      if (!finish(d)) {
+
         /*Cada vez que uma tecla é pressionada o controle executa esse trecho: */
         pressionou_prv = pressionou_act;
         pressionou_act = getchar();
