@@ -99,14 +99,31 @@ Point getApple(Deck *apple){
   return apple->p;
 
 }
-Deck *destruct (Deck *d, char field[][SIZE]){
-  Deck *destr = d;
-  while(destr->next != NULL){
-    if(d->p.x == destr->p.x && d->p.y == destr->p.y){
-      exit(1);
-      field[d->p.x][d->p.y] = 'X';
-    }
-    destr = destr->next;
-  }
-  return d;
+int destruct (Deck *d, Point deck, char field[][SIZE]){
+      Deck *novo = (Deck *)malloc(sizeof(Deck));
+      novo->p = deck;
+      novo->prev = NULL;
+      novo->next = NULL;
+      int au = 1;
+      if(d!= NULL){
+        Deck *aux = d;
+        while(aux->next != NULL){
+          if(deck.x == aux->p.x && deck.y == aux->p.y){
+            au = 0;
+          }
+         aux = aux->next;
+       }
+       return au;
+     }
 }
+/*
+Deck *destr = d;
+while(destr->next != NULL){
+  if(d->p.x == destr->p.x && d->p.y == destr->p.y){
+    exit(1);
+    field[d->p.x][d->p.y] = 'X';
+  }
+  destr = destr->next;
+}
+return d;
+*/
